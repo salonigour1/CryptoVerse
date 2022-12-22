@@ -13,9 +13,9 @@ import {
 } from "@mui/material";
 import { DataContext, useData } from "../context";
 function Header() {
-  const { data, setData } = useData();
-  console.log(data);
   const navigate = useNavigate();
+  const { currency, setCurrency, currSymbol } = useData();
+  console.log(currSymbol);
 
   return (
     <header>
@@ -40,7 +40,8 @@ function Header() {
                 </Typography>
 
                 <Select
-                  defaultValue={"USD"}
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
                   variant="outlined"
                   style={{
                     width: 120,

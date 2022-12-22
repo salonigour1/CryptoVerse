@@ -5,6 +5,8 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
   font-family: "Montserrat", sans-serif;
+  color: white;
+  /* background-color: #14161a; */
 }
 
 a {
@@ -15,7 +17,7 @@ a {
 .App {
   background-color: #14161a;
   color: white;
-  height: 100vh;
+  height: auto;
 }
 .header__navbar {
   background-color: #14161a;
@@ -25,4 +27,15 @@ a {
   color: gold;
   font-family: "Montserrat", sans-serif;
   font-weight: bolder;
+}
+.banner {
+  background-image: url("./Banner/Banner.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.carousel {
+  display: flex;
+  align-items: center;
+  color: red;
+  margin: 3rem;
 }

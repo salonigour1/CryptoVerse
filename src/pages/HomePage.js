@@ -1,7 +1,14 @@
 import React from "react";
+import Banner from "../components/Banner/Banner";
+import CoinsTable from "../components/CoinsTable";
 
 function HomePage() {
-  return <div>home</div>;
+  return (
+    <>
+      <Banner />
+      <CoinsTable />
+    </>
+  );
 }
 
 export default HomePage;

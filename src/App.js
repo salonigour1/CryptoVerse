@@ -8,6 +8,7 @@ import CoinDetail from "./pages/CoinDetail";
 import Error from "./pages/Error";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Dle from "./components/Banner/Dle";
 
 function App() {
   const darkTheme = createTheme({
@@ -15,7 +16,7 @@ function App() {
       primary: {
         main: "#fff",
       },
-      type: "dark",
+      mode: "dark",
     },
   });
   return (
