@@ -1,4 +1,10 @@
-import { LinearProgress, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  LinearProgress,
+  styled,
+  Typography,
+} from "@mui/material";
 import { createTheme } from "@mui/system";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -17,6 +23,7 @@ function CoinDetail() {
     );
     setLoading(false);
     setCoinDetails(data);
+    console.log(coinDetails);
   };
 
   useEffect(() => {
@@ -26,87 +33,176 @@ function CoinDetail() {
   const numberWithCommas = (num) => {
     if (num) return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
-  const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 900,
-        lg: 1200,
-        xl: 1536,
-      },
-    },
-  });
-
-  const style = {
-    container: {
-      padding: "20px",
-      display: "flex",
-      height: "93vh",
-      boxSizing: "borderBox",
-      overflow: "hidden",
-      // [theme.breakpoints.down("md")]: {
-      //   flexDirection: "column",
-      //   alignItems: "center",
-      //   backgroundColor: "red",
-      // },
-    },
-    sidebar: {
-      width: "30%",
-      display: "flex",
+  // const theme = createTheme({
+  //   breakpoints: {
+  //     values: {
+  //       xs: 0,
+  //       sm: 600,
+  //       md: 900,
+  //       lg: 1200,
+  //       xl: 1536,
+  //     },
+  //   },
+  // });
+  // const styles = (theme) => ({
+  //   con: {
+  //     padding: "20px",
+  //     display: "flex",
+  //     height: "auto",
+  //     boxSizing: "borderBox",
+  //     overflow: "hidden",
+  //     width: "100vw",
+  //     backgroundColor: "blue",
+  //     // Match [0, md)
+  //     //       [0, 900px)
+  //     [theme.breakpoints.up("xs")]: {
+  //       backgroundColor: "red",
+  //     },
+  //     [theme.breakpoints.down("sm")]: {
+  //       backgroundColor: "green",
+  //     },
+  //     [theme.breakpoints.down("md")]: {
+  //       backgroundColor: "brown",
+  //     },
+  //     [theme.breakpoints.up("lg")]: {
+  //       backgroundColor: "black",
+  //     },
+  //     [theme.breakpoints.up("xl")]: {
+  //       backgroundColor: "yellow",
+  //     },
+  //   },
+  // });
+  // const style = {
+  //   container: {
+  //     padding: "20px",
+  //     display: "flex",
+  //     height: "auto",
+  //     boxSizing: "borderBox",
+  //     overflow: "hidden",
+  //     width: "100vw",
+  //     [theme.breakpoints.up("md")]: {
+  //       flexDirection: "column",
+  //       alignItems: "center",
+  //       backgroundColor: "red",
+  //     },
+  //   },
+  //   sidebar: {
+  //     width: "30%",
+  //     height: "100%",
+  //     display: "flex",
+  //     flexDirection: "column",
+  //     alignItems: "center",
+  //     marginTop: 20,
+  //     borderRight: "2px solid grey",
+  //   },
+  //   heading: {
+  //     fontWeight: "bold",
+  //     margin: "20px",
+  //     fontFamily: "Montserrat",
+  //     // padding: "10px",
+  //   },
+  //   description: {
+  //     width: "100%",
+  //     fontFamily: "Montserrat",
+  //     fontSize: "1.2rem",
+  //     padding: "0.2rem",
+  //   },
+  // };
+  const Cointain = styled("div")(({ theme }) => ({
+    padding: "20px",
+    // height: "90vh",
+    boxSizing: "borderBox",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    boxSizing: "borderBox",
+    overflow: "hidden",
+    width: "100vw",
+    [theme.breakpoints.down("md")]: {
       flexDirection: "column",
       alignItems: "center",
-      marginTop: 20,
-      borderRight: "2px solid grey",
     },
-    heading: {
-      fontWeight: "bold",
-      margin: "20px",
-      fontFamily: "Montserrat",
-      // padding: "10px",
-    },
-    description: {
+  }));
+  const Sidebar = styled("div")(({ theme }) => ({
+    width: "30%",
+    height: "100%",
+    display: "flex",
+    padding: "10px",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: 20,
+    borderRight: "2px solid grey",
+    [theme.breakpoints.down("md")]: {
       width: "100%",
-      fontFamily: "Montserrat",
-      fontSize: "1.2rem",
-      padding: "0.2rem",
+      borderRight: "none",
     },
-  };
+  }));
   return (
     <>
       {loading ? (
         <LinearProgress sx={{ backgroundColor: "gold" }} />
       ) : (
-        <div style={style.container}>
-          <div style={style.sidebar}>
-            <img src={coinDetails?.image?.large} />
-            <Typography variant="h3" sx={style.heading}>
+        <Cointain>
+          <Sidebar>
+            {console.log(coinDetails?.image)}
+            <img src={coinDetails?.image?.large} height="180" />
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: "bold",
+                margin: "10px",
+                fontFamily: "Montserrat",
+              }}
+            >
               {coinDetails?.name}
             </Typography>
-            <Typography variant="subtitle1" sx={style.description}>
+            <Typography
+              variant="subtitle4"
+              sx={{
+                width: "100%",
+                fontFamily: "Montserrat",
+                fontSize: "1rem",
+                padding: "0.2rem",
+              }}
+            >
               {coinDetails?.description?.en.split(". ")[0]}
             </Typography>
-            <div style={{ margin: "1rem" }}>
+            <div style={{ margin: ".2rem" }}>
               <Typography
-                variant="h4"
-                sx={{ display: "inline", ...style.heading }}
+                variant="h6"
+                sx={{
+                  display: "inline",
+                  fontWeight: "bold",
+                  fontFamily: "Montserrat",
+                }}
               >
-                Rank :
+                Rank :&nbsp;
               </Typography>
 
-              <Typography variant="h5" sx={{ display: "inline" }}>
+              <Typography
+                variant="subtitle1"
+                sx={{ display: "inline", color: "darkgray" }}
+              >
                 {coinDetails?.market_cap_rank}
               </Typography>
             </div>
-            <div style={{ margin: "1rem" }}>
+            <div style={{ margin: ".1rem" }}>
               <Typography
-                variant="h4"
-                sx={{ display: "inline", ...style.heading }}
+                variant="h6"
+                sx={{
+                  display: "inline",
+                  fontWeight: "bold",
+
+                  fontFamily: "Montserrat",
+                }}
               >
-                Current Price :
+                Current Price :&nbsp;
               </Typography>
 
-              <Typography variant="h5" sx={{ display: "inline" }}>
+              <Typography
+                variant="subtitle1"
+                sx={{ display: "inline", color: "darkgray" }}
+              >
                 {currSymbol}&nbsp;
                 {numberWithCommas(
                   coinDetails?.market_data?.current_price[
@@ -115,15 +211,23 @@ function CoinDetail() {
                 )}
               </Typography>
             </div>
-            <div style={{ margin: "1rem" }}>
+            <div style={{ margin: ".2rem" }}>
               <Typography
-                variant="h4"
-                sx={{ display: "inline", ...style.heading }}
+                variant="h6"
+                sx={{
+                  display: "inline",
+                  fontWeight: "bold",
+
+                  fontFamily: "Montserrat",
+                }}
               >
-                Market Cap :
+                Market Cap :&nbsp;
               </Typography>
 
-              <Typography variant="h5" sx={{ display: "inline" }}>
+              <Typography
+                variant="subtitle1"
+                sx={{ display: "inline", color: "darkgray" }}
+              >
                 {currSymbol}&nbsp;
                 {numberWithCommas(
                   coinDetails?.market_data?.market_cap[currency.toLowerCase()]
@@ -133,9 +237,9 @@ function CoinDetail() {
                 M
               </Typography>
             </div>
-          </div>
+          </Sidebar>
           <CoinInfo coinDetails={coinDetails} />
-        </div>
+        </Cointain>
       )}
     </>
   );

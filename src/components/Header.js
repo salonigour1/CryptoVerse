@@ -19,45 +19,44 @@ function Header() {
 
   return (
     <header>
-      <div className="header__navbar">
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar color="transparent" position="static">
-            <Container maxWidth="xxl">
-              <Toolbar
-                variant="dense"
-                sx={{ justifyContent: "space-between", alignItems: "center" }}
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar color="transparent" position="static">
+          <Container maxWidth="xl">
+            <Toolbar
+              variant="dense"
+              sx={{ justifyContent: "space-between", alignItems: "center" }}
+            >
+              <Typography
+                onClick={() => navigate("/")}
+                sx={{
+                  fontWeight: "bold",
+                  color: "gold",
+                  cursor: "pointer",
+                }}
+                variant="h3"
               >
-                <Typography
-                  onClick={() => navigate("/")}
-                  sx={{
-                    fontWeight: "bold",
-                    color: "gold",
-                    cursor: "pointer",
-                  }}
-                  variant="h3"
-                >
-                  CryptoVerse
-                </Typography>
+                CryptoVerse
+              </Typography>
 
-                <Select
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                  variant="outlined"
-                  style={{
-                    width: 120,
-                    height: 40,
-                    marginLeft: 15,
-                    color: "white",
-                  }}
-                >
-                  <MenuItem value={"USD"}>USD</MenuItem>
-                  <MenuItem value={"INR"}>INR</MenuItem>
-                </Select>
-              </Toolbar>
-            </Container>
-          </AppBar>
-        </Box>
-      </div>
+              <Select
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                variant="outlined"
+                style={{
+                  width: 80,
+                  height: 30,
+                  marginLeft: 10,
+                  color: "white",
+                }}
+              >
+                <MenuItem value={"USD"}>USD</MenuItem>
+                <MenuItem value={"INR"}>INR</MenuItem>
+              </Select>
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </Box>
+
       {/* <Button variant="contained"></Button> */}
     </header>
   );

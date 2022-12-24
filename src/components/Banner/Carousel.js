@@ -8,14 +8,14 @@ function Carousel() {
   const { currency, currSymbol } = useData();
   const [trendingCoins, setTrendingCoins] = useState([]);
 
-  const style = {
-    carousel: {
-      height: "50%",
-      display: "flex",
-      alignItems: "center",
-      color: "red",
-    },
-  };
+  // const style = {
+  //   carousel: {
+  //     height: "50%",
+  //     display: "flex",
+  //     alignItems: "center",
+  //     color: "red",
+  //   },
+  // };
   const numberWithCommas = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -29,12 +29,13 @@ function Carousel() {
   useEffect(() => {
     fetchTrendingCoins();
   }, [currency]);
+
   const items = trendingCoins.map((curr) => {
     return (
       <Link to={`/coins/${curr.id}`}>
-        <img src={curr?.image} alt={curr.name} height="80" />
+        <img src={curr?.image} alt={curr.name} height="55" />
         <br />
-        <div style={{ margin: "10px" }}>
+        <div style={{ margin: "5px" }}>
           <span style={{ textTransform: "uppercase" }}>{curr?.symbol}</span>
           &nbsp; &nbsp;
           <span
@@ -46,7 +47,7 @@ function Carousel() {
             {curr?.price_change_percentage_24h?.toFixed(2)}
           </span>
         </div>
-        <div style={{ fontSize: 28, fontWeight: 500, color: "white" }}>
+        <div style={{ fontSize: 18, fontWeight: 500, color: "white" }}>
           {currSymbol}&nbsp;
           {numberWithCommas(curr?.current_price.toFixed(2))}
         </div>
@@ -64,6 +65,7 @@ function Carousel() {
         disableDotsControls
         responsive={{ 0: { items: 2 }, 512: { items: 3 }, 1000: { items: 4 } }}
         autoPlay
+        disableButtonsControls
         items={items}
       />
     </div>

@@ -1,8 +1,9 @@
 import React from "react";
 import Dle from "./Dle";
 import "../style.css";
-import { Container, Typography } from "@mui/material";
+import { Container, styled, Typography } from "@mui/material";
 import Carousel from "./Carousel";
+import banner from "./Banner.jpg";
 
 function Banner() {
   const style = {
@@ -21,27 +22,49 @@ function Banner() {
       alignItems: "center",
     },
   };
+  const Banner = styled("div")(({ theme }) => ({
+    height: "20rem",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundImage: `url(${banner})`,
+  }));
   return (
-    <div className="banner" style={{ height: "30rem" }}>
-      <Container maxWidth="xxl" sx={{ ...style.container }}>
-        <div className={{ ...style.tagline }}>
+    <Banner>
+      <Container
+        maxWidth="xxl"
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          padding: 25,
+        }}
+      >
+        <div
+          className={{
+            display: "flex",
+            height: "80%",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Typography
-            variant="h2"
+            variant="h3"
             sx={{
               fontWeight: "bold",
-              margin: "15px",
+              margin: "10px",
               fontFamily: "Montserrat",
             }}
           >
             CryptoVerse
           </Typography>
           <Typography
-            variant="subtitle2"
+            variant="subtitle1"
             sx={{
               color: "darkgrey",
               textTransform: "capitalize",
               fontFamily: "Montserrat",
-              fontSize: "1.8rem",
             }}
           >
             Get All the Info about your favorite Crypto currency
@@ -49,7 +72,7 @@ function Banner() {
         </div>
         <Carousel />
       </Container>
-    </div>
+    </Banner>
   );
 }
 

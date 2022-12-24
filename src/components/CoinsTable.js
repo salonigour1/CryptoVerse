@@ -65,17 +65,17 @@ function CoinsTable() {
       "&:hover": { backgroundColor: "black" },
     },
     pagination: {
-      margin: "1rem",
       width: "100%",
       color: "white",
       fontSize: "3rem",
+      padding: "1rem",
       "& .MuiPaginationItem-root": {
         color: "gold",
-        fontSize: "1.5rem",
+        fontSize: "1rem",
         padding: "0.3rem",
       },
       "& .MuiPagination-root": {
-        width: "40rem",
+        width: "50rem",
       },
       display: "flex",
       flexGrow: "1",
@@ -97,10 +97,10 @@ function CoinsTable() {
   };
   return (
     <ThemeProvider theme={darkTheme}>
-      <Container sx={{ textAlign: "center" }}>
+      <Container sx={{ width: "70%" }}>
         <Typography
           variant="h4"
-          sx={{ margin: "2rem", fontFamily: "Montserrat", color: "darkgrey" }}
+          sx={{ margin: "1.5rem", fontFamily: "Montserrat", color: "darkgrey" }}
         >
           Cryptocurrency Prices by Market Cap
         </Typography>
@@ -109,23 +109,25 @@ function CoinsTable() {
           label="Search For a Currency"
           variant="outlined"
           onChange={(e) => setSearch(e.target.value)}
-          sx={{ marginBottom: "2rem", width: "100%", color: "white" }}
+          sx={{ marginBottom: "1rem", width: "100%", color: "white" }}
         />
-        <TableContainer>
+        <TableContainer
+          sx={{ backgroundColor: "white", width: "100%", margin: "auto" }}
+        >
           {loading ? (
             <LinearProgress sx={{ backgroundColor: "gold" }} />
           ) : (
-            <Table>
+            <Table sx={{ width: "100%" }}>
               <TableHead sx={{ backgroundColor: "#EEBC1D" }}>
-                <TableRow sx={{ height: "5rem" }}>
+                <TableRow sx={{ height: "3rem" }}>
                   {["Coin", "Price", "24h Change", "Market Cap"].map((curr) => (
                     <TableCell
                       sx={{
                         color: "black",
-                        fontWeight: "700",
+                        fontWeight: "bold",
                         fontFamily: "Montserrat",
                         textAlign: "center",
-                        fontSize: "1.8rem",
+                        fontSize: "1.2rem",
                       }}
                       key={curr}
                     >
@@ -150,15 +152,15 @@ function CoinsTable() {
                           scope="row"
                           styles={{
                             display: "flex",
-                            gap: 18,
+                            gap: 10,
                             textAlign: "center",
                           }}
                         >
                           <img
                             src={curr?.image}
                             alt={curr.name}
-                            height="50"
-                            sx={{ marginBottom: 5 }}
+                            height="40"
+                            sx={{ marginBottom: 3 }}
                           />
                           <div
                             style={{ display: "flex", flexDirection: "column" }}
@@ -166,7 +168,7 @@ function CoinsTable() {
                             <div
                               style={{
                                 textTransform: "uppercase",
-                                fontSize: "1.5rem",
+                                fontSize: "1rem",
                               }}
                             >
                               {curr.symbol}
@@ -176,7 +178,7 @@ function CoinsTable() {
                         </TableCell>
                         <TableCell
                           sx={{
-                            fontSize: "1.5rem",
+                            fontSize: "1.2rem",
                             fontWeight: 500,
                             color: "white",
                             textAlign: "center",
@@ -188,7 +190,7 @@ function CoinsTable() {
 
                         <TableCell
                           sx={{
-                            fontSize: "1.5rem",
+                            fontSize: "1.2rem",
                             textAlign: "center",
                             color:
                               curr?.price_change_percentage_24h >= 0
@@ -201,7 +203,7 @@ function CoinsTable() {
                         </TableCell>
                         <TableCell
                           sx={{
-                            fontSize: "1.5rem",
+                            fontSize: "1.2rem",
                             textAlign: "center",
                             color: "white",
                           }}
