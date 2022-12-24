@@ -8,14 +8,6 @@ function Carousel() {
   const { currency, currSymbol } = useData();
   const [trendingCoins, setTrendingCoins] = useState([]);
 
-  // const style = {
-  //   carousel: {
-  //     height: "50%",
-  //     display: "flex",
-  //     alignItems: "center",
-  //     color: "red",
-  //   },
-  // };
   const numberWithCommas = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };

@@ -48,7 +48,7 @@ function CoinInfo({ coinDetails }) {
     alignItems: "center",
     justifyContent: "center",
     boxSizing: "borderBox",
-    padding: 40,
+    padding: "0px   20px",
     [theme.breakpoints.down("md")]: {
       width: "100%",
     },
