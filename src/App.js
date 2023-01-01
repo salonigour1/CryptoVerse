@@ -9,6 +9,7 @@ import Error from "./pages/Error";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Dle from "./components/Banner/Dle";
+import Alert from "./components/Alert";
 
 function App() {
   const darkTheme = createTheme({
@@ -23,7 +24,7 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <BrowserRouter>
         <div className="App">
-          <Dle />
+          <Alert />
           <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />

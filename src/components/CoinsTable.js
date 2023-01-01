@@ -19,20 +19,13 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useData } from "../context";
 
 function CoinsTable() {
-  const [coins, setCoins] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { currency, currSymbol } = useData();
+  // const [coins, setCoins] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const { currency, currSymbol, coins, loading, fetchCoins } = useData();
   const [search, setSearch] = useState();
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
-  const fetchCoins = async () => {
-    const { data } = await axios(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=1&sparkline=false`
-    );
-    setCoins(data);
-    setLoading(false);
-  };
   const numberWithCommas = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };

@@ -12,9 +12,11 @@ import {
   Typography,
 } from "@mui/material";
 import { DataContext, useData } from "../context";
+import AuthModal from "./Authentication/AuthModal";
+import UserSidebar from "./UserSidebar";
 function Header() {
   const navigate = useNavigate();
-  const { currency, setCurrency, currSymbol } = useData();
+  const { currency, setCurrency, currSymbol, user } = useData();
   console.log(currSymbol);
 
   return (
@@ -37,21 +39,24 @@ function Header() {
               >
                 CryptoVerse
               </Typography>
-
-              <Select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                variant="outlined"
-                style={{
-                  width: 80,
-                  height: 30,
-                  marginLeft: 10,
-                  color: "white",
-                }}
-              >
-                <MenuItem value={"USD"}>USD</MenuItem>
-                <MenuItem value={"INR"}>INR</MenuItem>
-              </Select>
+              <Box sx={{ display: "flex" }}>
+                <Select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  variant="outlined"
+                  style={{
+                    width: 80,
+                    height: 30,
+                    marginLeft: 10,
+                    color: "white",
+                  }}
+                >
+                  <MenuItem value={"USD"}>USD</MenuItem>
+                  <MenuItem value={"INR"}>INR</MenuItem>
+                </Select>
+                {/* <AuthModal /> */}
+                {user ? <UserSidebar /> : <AuthModal />}
+              </Box>
             </Toolbar>
           </Container>
         </AppBar>
