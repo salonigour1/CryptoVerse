@@ -39,7 +39,25 @@ function AuthModal() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const googleProvider = new GoogleAuthProvider();
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((res) => {
+        setAlert({
+          open: true,
+          message: "Google Sign In successfull!",
+          type: "success",
+        });
+        handleClose();
+      })
+      .catch((err) => {
+        setAlert({
+          open: true,
+          message: "Google Sign In Failed",
+          type: "error",
+        });
+      });
+  };
   return (
     <div>
       <Button
