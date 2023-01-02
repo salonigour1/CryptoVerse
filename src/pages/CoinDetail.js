@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   LinearProgress,
   styled,
@@ -12,11 +13,14 @@ import { useParams } from "react-router-dom";
 import CoinInfo from "../components/CoinInfo";
 import { useData } from "../context";
 import ReactHtmlParser from "html-react-parser";
+import { async } from "@firebase/util";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 function CoinDetail() {
   const [loading, setLoading] = useState(true);
   const [coinDetails, setCoinDetails] = useState({});
-  const { currSymbol, currency } = useData();
+  const { currSymbol, currency, user, watchlist, setAlert } = useData();
   const { id } = useParams();
   const fetchDetails = async () => {
     const { data } = await axios(
@@ -29,7 +33,44 @@ function CoinDetail() {
 
   useEffect(() => {
     fetchDetails();
+    console.log(coinDetails);
   }, []);
+
+  //const inWatchlist = watchlist.includes(coinDetails?.id);
+  const inWatchlist = watchlist.includes(coinDetails?.id);
+  const handleWatchlist = async () => {
+    const coinRef = doc(db, "watchlist", user.uid);
+    try {
+      await setDoc(coinRef, {
+        coinDetails: watchlist
+          ? [...watchlist, coinDetails?.id]
+          : [coinDetails?.id],
+      });
+      setAlert({ open: true, message: "Added to watchlist", type: "success" });
+    } catch (error) {
+      setAlert({ open: true, message: error, type: "error" });
+    }
+  };
+
+  const handleRemoveFromWacthlist = async () => {
+    const coinRef = doc(db, "watchlist", user.uid);
+    try {
+      await setDoc(
+        coinRef,
+        {
+          coinDetails: watchlist.filter((curr) => curr !== coinDetails?.id),
+        },
+        { merge: "true" }
+      );
+      setAlert({
+        open: true,
+        message: "Removed from the watchlist",
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({ open: true, message: error, type: "error" });
+    }
+  };
 
   const numberWithCommas = (num) => {
     if (num) return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -45,6 +86,7 @@ function CoinDetail() {
     boxSizing: "borderBox",
     overflow: "hidden",
     width: "100vw",
+
     [theme.breakpoints.down("md")]: {
       flexDirection: "column",
       alignItems: "center",
@@ -55,6 +97,7 @@ function CoinDetail() {
     height: "100%",
     display: "flex",
     padding: "10px",
+
     flexDirection: "column",
     alignItems: "center",
     marginTop: 20,
@@ -71,13 +114,12 @@ function CoinDetail() {
       ) : (
         <Cointain>
           <Sidebar>
-            {console.log(coinDetails?.image)}
-            <img src={coinDetails?.image?.large} height="180" />
+            <img src={coinDetails?.image?.large} height="150" />
             <Typography
               variant="h4"
               sx={{
                 fontWeight: "bold",
-                margin: "10px",
+                margin: "8px",
                 fontFamily: "Montserrat",
               }}
             >
@@ -88,7 +130,7 @@ function CoinDetail() {
               sx={{
                 width: "100%",
                 fontFamily: "Montserrat",
-                fontSize: "1rem",
+                fontSize: "0.9rem",
                 padding: "0.2rem",
               }}
             >
@@ -164,6 +206,25 @@ function CoinDetail() {
                 M
               </Typography>
             </div>
+            {user && (
+              <Button
+                variant="outlined"
+                style={{
+                  width: "240px",
+                  height: 40,
+                  backgroundColor: ` ${!inWatchlist ? "gold" : "red"}`,
+                  color: "black",
+                  fontWeight: "bolder",
+                  margin: "5px",
+                  marginTop: "15px",
+                }}
+                onClick={
+                  !inWatchlist ? handleWatchlist : handleRemoveFromWacthlist
+                }
+              >
+                {!inWatchlist ? "Add to Watchlist" : "Remove from watchlist"}
+              </Button>
+            )}
           </Sidebar>
           <CoinInfo coinDetails={coinDetails} />
         </Cointain>

@@ -17,7 +17,6 @@ import UserSidebar from "./UserSidebar";
 function Header() {
   const navigate = useNavigate();
   const { currency, setCurrency, currSymbol, user } = useData();
-  console.log(currSymbol);
 
   return (
     <header>

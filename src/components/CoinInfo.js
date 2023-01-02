@@ -13,7 +13,7 @@ function CoinInfo({ coinDetails }) {
   const [historcalData, setHistoricalData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-  const [days, setDays] = useState(1);
+  const [days, setDays] = useState(360);
   const { currency } = useData();
   const fetchData = async (id, days, currency) => {
     const { data } = await axios(
@@ -21,7 +21,6 @@ function CoinInfo({ coinDetails }) {
     );
     setHistoricalData(data.prices);
     setLoading(false);
-    console.log(data.prices);
   };
   useEffect(() => {
     fetchData(id, days, currency);
