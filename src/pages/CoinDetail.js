@@ -108,7 +108,7 @@ function CoinDetail() {
     },
   }));
   return (
-    <>
+    <div div style={{ height: "90vh", backgroundColor: "#14161a" }}>
       {loading ? (
         <LinearProgress sx={{ backgroundColor: "gold" }} />
       ) : (
@@ -229,7 +229,7 @@ function CoinDetail() {
           <CoinInfo coinDetails={coinDetails} />
         </Cointain>
       )}
-    </>
+    </div>
   );
 }
 

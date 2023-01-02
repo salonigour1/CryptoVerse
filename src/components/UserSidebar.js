@@ -3,15 +3,18 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import { useData } from "../context";
-import { Avatar } from "@mui/material";
+import { Avatar, useMediaQuery, useTheme } from "@mui/material";
 import { Container, styled, width } from "@mui/system";
+import { MdDelete } from "react-icons/md";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { Link } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
 function UserSidebar() {
   const [state, setState] = React.useState({
     right: false,
   });
-  const { user, setAlert } = useData();
+  const { user, setAlert, coins, currSymbol, watchlist } = useData();
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -49,7 +52,32 @@ function UserSidebar() {
     gap: 12,
     overflowY: "scroll",
   }));
+  // const theme = useTheme();
+  // const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
+  const handleRemoveFromWacthlist = async (coinDetails) => {
+    const coinRef = doc(db, "watchlist", user.uid);
+    try {
+      await setDoc(
+        coinRef,
+        {
+          coinDetails: watchlist.filter((curr) => curr !== coinDetails?.id),
+        },
+        { merge: "true" }
+      );
+      setAlert({
+        open: true,
+        message: "Removed from the watchlist",
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({ open: true, message: error, type: "error" });
+    }
+  };
+
+  const numberWithCommas = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
   return (
     <div>
       {["right"].map((anchor) => (
@@ -67,7 +95,11 @@ function UserSidebar() {
             alt={user.displayName || user.email}
           />
           <Drawer
-            sx={{ width: "50vh" }}
+            PaperProps={{
+              sx: {
+                width: "24rem",
+              },
+            }}
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
@@ -106,7 +138,44 @@ function UserSidebar() {
                   {user.displayName || user.email}
                 </div>
                 <div>watchlist</div>
-                <Watchlist></Watchlist>
+                <Watchlist>
+                  {coins.map((curr) => {
+                    if (watchlist.includes(curr.id))
+                      return (
+                        <Link
+                          to={`/coins/${curr.id}`}
+                          style={{
+                            display: "flex",
+                            color: "black",
+                            justifyContent: "space-around",
+                            width: "100%",
+                            backgroundColor: "gold",
+                            border: "1px solid black",
+                            borderRadius: "8px",
+                          }}
+                        >
+                          <div style={{ color: "black" }}>{curr.name}</div>
+                          <div
+                            style={{ display: "flex", gap: 8, color: "black" }}
+                          >
+                            {currSymbol}{" "}
+                            {numberWithCommas(curr.current_price.toFixed(2))}
+                          </div>
+                          <div>
+                            <MdDelete
+                              color="red"
+                              onClick={() => handleRemoveFromWacthlist(curr)}
+                              style={{
+                                fontSize: "1.2rem",
+                                color: "black",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </div>
+                        </Link>
+                      );
+                  })}
+                </Watchlist>
               </div>
 
               <Button
